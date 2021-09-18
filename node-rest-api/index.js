@@ -12,6 +12,16 @@ const authRoute = require("./routes/authRoutes");
 
 dotenv.config();
 
+//MIDDLEWARE
+app.use(express.json());
+app.use(cors());
+app.use(helmet());
+app.use(morgan("common"));
+
+app.use("/api/users", userRoute);
+app.use("/api/auth", authRoute);
+
+//CONNECT TO DATABASE
 mongoose.connect(
   process.env.CONNECTION_URL,
   {
@@ -22,15 +32,6 @@ mongoose.connect(
     console.log("Connected to Mongo DB");
   },
 );
-
-// middleware
-app.use(express.json());
-app.use(cors());
-app.use(helmet());
-app.use(morgan("common"));
-
-app.use("/api/users", userRoute);
-app.use("/api/auth", authRoute);
 
 const port = process.env.PORT || 5000;
 
