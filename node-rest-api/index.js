@@ -7,6 +7,7 @@ const dotenv = require("dotenv");
 const morgan = require("morgan");
 const helmet = require("helmet");
 const mongoose = require("mongoose");
+const connectDB = require("./connection");
 const userRoute = require("./routes/userRoutes");
 const authRoute = require("./routes/authRoutes");
 
@@ -22,16 +23,7 @@ app.use("/api/users", userRoute);
 app.use("/api/auth", authRoute);
 
 //CONNECT TO DATABASE
-mongoose.connect(
-  process.env.CONNECTION_URL,
-  {
-    useUnifiedTopology: true,
-    useNewUrlParser: true,
-  },
-  () => {
-    console.log("Connected to Mongo DB");
-  },
-);
+connectDB();
 
 const port = process.env.PORT || 5000;
 
